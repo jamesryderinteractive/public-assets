@@ -199,7 +199,7 @@ function submitForm(event) {
     question6,
   ];
 
-  for (var j = 0; j < 2; j++) {
+  for (var j = 0; j < 6; j++) {
     for (var i = 0; i < questionsArray[j].length; i++) {
       if (questionsArray[j][i].checked) {
         checked[j] = questionsArray[j][i].checked;
