@@ -175,7 +175,8 @@ jQuery(function ($) {
 function submitForm(event) {
   event.preventDefault();
 
-  $('form').find(':button[type=submit]').prop('disabled', true);
+  // FIXME: Need to improve the disable button. If user fills again the form the button will not go back to enable
+  // $('form').find(':button[type=submit]').prop('disabled', true);
   var firstName = document.getElementById('fname').value;
   var lastName = document.getElementById('lname').value;
   var email = document.getElementById('email').value;
@@ -351,11 +352,13 @@ function submitForm(event) {
         }
       } else {
         // console.log('Error:', response.text());
-        $('form').find(':button[type=submit]').prop('disabled', false);
+        // FIXME: Need to improve the disable button. If user fills again the form the button will not go back to enable
+        // $('form').find(':button[type=submit]').prop('disabled', false);
       }
     })
     .catch((error) => {
       //   console.log('Error:', error);
-      $('form').find(':button[type=submit]').prop('disabled', false);
+      // FIXME: Need to improve the disable button. If user fills again the form the button will not go back to enable
+      // $('form').find(':button[type=submit]').prop('disabled', false);
     });
 }
