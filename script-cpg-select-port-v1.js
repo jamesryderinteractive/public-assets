@@ -254,12 +254,9 @@ function submitForm(event) {
   var jornaya = document.getElementById('jornaya').value;
   var ppath = window.location.href;
   var arrAnswers = checkAnswers(6);
-  var hasAnswer =
-    arrAnswers.indexOf('yes') !== -1 || arrAnswers.indexOf('no') !== -1
-      ? true
-      : false;
-  console.log('arrAnswers=', arrAnswers);
-  confirm('hasAnsers=', hasAnswer);
+  var hasAnswer = arrAnswers.indexOf('yes') !== -1 || arrAnswers.indexOf('no') !== -1 ? true : false;
+  // console.log('arrAnswers=', arrAnswers);
+  // console.log('hasAnswers=', hasAnswer);
 
   if (
     !firstName ||
@@ -267,7 +264,7 @@ function submitForm(event) {
     !email ||
     !phone ||
     phone.replace(/\D/g, '').length !== 10 ||
-    hasAnswer
+    !hasAnswer
   ) {
     var errorMessage = 'Please fill in all required fields.';
     var errorDiv = document.getElementById('error-message');
