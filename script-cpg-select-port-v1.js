@@ -188,8 +188,8 @@ function submitForm(event) {
   var question5 = document.querySelectorAll('input[name="question__5"]');
   var question6 = document.querySelectorAll('input[name="question__6"]');
 
-  var checked = [false, false];
-  var q = ['', ''];
+  var checked = [false, false, false, false, false, false];
+  var q = ['', '', '', '', '', ''];
   var questionsArray = [
     question1,
     question2,
