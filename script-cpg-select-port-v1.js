@@ -199,11 +199,15 @@ function submitForm(event) {
     question6,
   ];
 
-  for (var j = 0; j < 6; j++) {
+  for (var j = 0; j <= 6; j++) {
+    console.log('j=', j);
     for (var i = 0; i < questionsArray[j].length; i++) {
+      console.log('i=', i);
+      console.log('val=', questionsArray[j][i].checked);
       if (questionsArray[j][i].checked) {
         checked[j] = questionsArray[j][i].checked;
         q[j] = questionsArray[j][i].value;
+        console.log('checked= ' + checked[j] + ' ' + 'query= ' + q[j]);
         break;
       }
     }
