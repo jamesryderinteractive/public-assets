@@ -1,4 +1,9 @@
-// URL: https://bc1-creative-assets.nyc3.digitaloceanspaces.com/js/script-cpg-select-talc-jared2.js
+/**
+ * @snippet       Submit form to leadprosper.io with form validations
+ * @sourcecode    https://github.com/jamesryderinteractive/public-assets
+ * @author        Jeff Ray Lazo
+ * @version       1.0.0
+ */
 var styles = `
     button[disabled] {
       background-color: #ccc!important;

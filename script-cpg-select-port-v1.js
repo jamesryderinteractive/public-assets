@@ -1,3 +1,9 @@
+/**
+ * @snippet       Submit form to leadprosper.io with form validations
+ * @sourcecode    https://github.com/jamesryderinteractive/public-assets
+ * @author        Jeff Ray Lazo
+ * @version       1.0.3
+ */
 var styles = `
     button[disabled] {
       background-color: #ccc!important;
@@ -192,15 +198,6 @@ function checkAnswers(numQuestions) {
     } else {
       document.getElementById('question' + i).classList.add('error');
     }
-
-    // if (selectedOption === 'yes') {
-    //   console.log('Question ' + i + ': Yes');
-    // } else if (selectedOption === 'no') {
-    //   console.log('Question ' + i + ': No');
-    // } else {
-    //   console.log('Question ' + i + ': Not answered');
-    //   document.getElementById('question' + i).classList.add('error');
-    // }
   }
 
   return arrAnswers;
@@ -215,37 +212,6 @@ function submitForm(event) {
   var lastName = document.getElementById('lname').value;
   var email = document.getElementById('email').value;
   var phone = document.getElementById('phone').value.replace(/-/g, '');
-  // var question1 = document.querySelectorAll('input[name="question__1"]');
-  // var question2 = document.querySelectorAll('input[name="question__2"]');
-  // var question3 = document.querySelectorAll('input[name="question__3"]');
-  // var question4 = document.querySelectorAll('input[name="question__4"]');
-  // var question5 = document.querySelectorAll('input[name="question__5"]');
-  // var question6 = document.querySelectorAll('input[name="question__6"]');
-
-  // var checked = [false, false, false, false, false, false];
-  // var q = ['', '', '', '', '', ''];
-  // var questionsArray = [
-  //   question1,
-  //   question2,
-  //   question3,
-  //   question4,
-  //   question5,
-  //   question6,
-  // ];
-
-  // for (var j = 0; j <= 6; j++) {
-  //   console.log('j=', j);
-  //   for (var i = 0; i < questionsArray[j].length; i++) {
-  //     console.log('i=', i);
-  //     console.log('val=', questionsArray[j][i].checked);
-  //     if (questionsArray[j][i].checked) {
-  //       checked[j] = questionsArray[j][i].checked;
-  //       q[j] = questionsArray[j][i].value;
-  //       console.log('checked= ' + checked[j] + ' ' + 'query= ' + q[j]);
-  //       break;
-  //     }
-  //   }
-  // }
 
   // Hidden
   var input_campaign_id = document.getElementById('lp_campaign_id').value;
@@ -254,7 +220,10 @@ function submitForm(event) {
   var jornaya = document.getElementById('jornaya').value;
   var ppath = window.location.href;
   var arrAnswers = checkAnswers(6);
-  var hasAnswer = arrAnswers.indexOf('yes') !== -1 || arrAnswers.indexOf('no') !== -1 ? true : false;
+  var hasAnswer =
+    arrAnswers.indexOf('yes') !== -1 || arrAnswers.indexOf('no') !== -1
+      ? true
+      : false;
   // console.log('arrAnswers=', arrAnswers);
   // console.log('hasAnswers=', hasAnswer);
 
@@ -293,36 +262,7 @@ function submitForm(event) {
     } else {
       document.getElementById('phone').classList.remove('error');
     }
-    // if (!checked[0]) {
-    //   document.getElementById('question1').classList.add('error');
-    // } else {
-    //   document.getElementById('question1').classList.remove('error');
-    // }
-    // if (!checked[1]) {
-    //   document.getElementById('question2').classList.add('error');
-    // } else {
-    //   document.getElementById('question2').classList.remove('error');
-    // }
-    // if (!checked[2]) {
-    //   document.getElementById('question3').classList.add('error');
-    // } else {
-    //   document.getElementById('question3').classList.remove('error');
-    // }
-    // if (!checked[3]) {
-    //   document.getElementById('question4').classList.add('error');
-    // } else {
-    //   document.getElementById('question4').classList.remove('error');
-    // }
-    // if (!checked[4]) {
-    //   document.getElementById('question5').classList.add('error');
-    // } else {
-    //   document.getElementById('question5').classList.remove('error');
-    // }
-    // if (!checked[5]) {
-    //   document.getElementById('question6').classList.add('error');
-    // } else {
-    //   document.getElementById('question6').classList.remove('error');
-    // }
+
     errorDiv.innerHTML = errorMessage;
     return;
   }
