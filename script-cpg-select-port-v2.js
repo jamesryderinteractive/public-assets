@@ -2,20 +2,8 @@
  * @snippet       Submit form to leadprosper.io with form validations
  * @sourcecode    https://github.com/jamesryderinteractive/public-assets
  * @author        Jeff Ray Lazo
- * @version       1.0.0
+ * @version       1.0.3
  */
-var styles = `
-    button[disabled] {
-      background-color: #ccc!important;
-      cursor: unset!important;
-      pointer-events: none!important;
-    }
-`;
-
-var styleSheet = document.createElement('style');
-styleSheet.innerText = styles;
-document.head.appendChild(styleSheet);
-
 jQuery(document).ready(function ($) {
   $('.mask_phone').on('input', function () {
     var result = $(this)
@@ -55,9 +43,9 @@ var utmContent = searchParams.get('utm_content');
 var utmTerm = searchParams.get('utm_term');
 var gClid = searchParams.get('gclid');
 var clickid = searchParams.get('clickid');
-var sub1 = searchParams.get('sub1');
-var sub2 = searchParams.get('sub2');
-var sub3 = searchParams.get('sub3');
+var subid_1 = searchParams.get('subid_1');
+var subid_2 = searchParams.get('subid_2');
+// var subid_3 = searchParams.get('subid_3');
 var affid = searchParams.get('affid');
 var refParam = searchParams.get('_ref');
 var efTransactionId = searchParams.get('_ef_transaction_id');
@@ -72,7 +60,7 @@ var year = today.getFullYear();
 var month = (today.getMonth() + 1).toString().padStart(2, '0');
 var day = today.getDate().toString().padStart(2, '0');
 var formattedDate = `${year}-${month}-${day}`;
-console.log(formattedDate);
+// console.log(formattedDate);
 
 var ipAddress = '111.111.11.11';
 
@@ -96,7 +84,7 @@ var storedGtmTag = sessionStorage.getItem('gtmtag');
 var storedGClid = sessionStorage.getItem('gclid');
 var storeClickid = sessionStorage.getItem('clickid');
 
-console.log(gtmtag);
+// console.log(gtmtag);
 if (storedGtmTag) {
   (function (w, d, s, l, i) {
     w[l] = w[l] || [];
@@ -152,11 +140,11 @@ jQuery(function ($) {
 
   //$('.stepbox button').click(next);
 
-  $('#select__1').change(function (e) {
+  $('#select__3').change(function (e) {
     e = e || window.event;
 
     if ($(this).val() !== 'None') {
-      console.log('select ' + $(this).val());
+      // console.log('select ' + $(this).val());
       next(e, true);
     } else {
       next(e, false);
@@ -168,7 +156,7 @@ jQuery(function ($) {
     e = e || window.event;
 
     if (!$(this).hasClass('end')) {
-      console.log('select ' + $(this).val());
+      // console.log('select ' + $(this).val());
       next(e, true);
     } else {
       next(e, false);
@@ -181,24 +169,22 @@ jQuery(function ($) {
 function submitForm(event) {
   event.preventDefault();
 
-  $('form').find(':button[type=submit]').prop('disabled', true);
-  console.log('submit');
-
   var firstName = document.getElementById('fname').value;
   var lastName = document.getElementById('lname').value;
   var email = document.getElementById('email').value;
   var phone = document.getElementById('phone').value.replace(/-/g, '');
-  var question1select = document.getElementById('select__1').value;
+  var question1 = document.querySelectorAll('input[name="question__1"]');
   var question2 = document.querySelectorAll('input[name="question__2"]');
-  var question3 = document.querySelectorAll('input[name="question__3"]');
+  var question3select = document.getElementById('select__3').value;
   var question4 = document.querySelectorAll('input[name="question__4"]');
   var question5 = document.querySelectorAll('input[name="question__5"]');
+  var question6 = document.querySelectorAll('input[name="question__6"]');
 
-  var checked = [false, false];
-  var q = ['', ''];
-  var questionsArray = [question2, question3];
+  var checked = [false, false, false, false, false];
+  var q = ['', '', '', '', ''];
+  var questionsArray = [question1, question2, question4, question5, question6];
 
-  for (var j = 0; j < 2; j++) {
+  for (var j = 0; j < 5; j++) {
     for (var i = 0; i < questionsArray[j].length; i++) {
       if (questionsArray[j][i].checked) {
         checked[j] = questionsArray[j][i].checked;
@@ -207,10 +193,6 @@ function submitForm(event) {
       }
     }
   }
-
-  console.log(q[0] + ' - ' + q[1]);
-
-  console.log('phone: ' + phone);
 
   // Hidden
   var input_campaign_id = document.getElementById('lp_campaign_id').value;
@@ -224,10 +206,7 @@ function submitForm(event) {
     !lastName ||
     !email ||
     !phone ||
-    phone.replace(/\D/g, '').length !== 10 ||
-    !question1select ||
-    !checked[0] ||
-    !checked[1]
+    phone.replace(/\D/g, '').length !== 10
   ) {
     var errorMessage = 'Please fill in all required fields.';
     var errorDiv = document.getElementById('error-message');
@@ -235,24 +214,18 @@ function submitForm(event) {
     // Add a CSS class to empty required fields
     if (firstName === '') {
       document.getElementById('fname').classList.add('error');
-      console.log('1');
     } else {
       document.getElementById('fname').classList.remove('error');
-      console.log('2');
     }
     if (lastName === '') {
       document.getElementById('lname').classList.add('error');
-      console.log('3');
     } else {
       document.getElementById('lname').classList.remove('error');
-      console.log('4');
     }
     if (email === '') {
       document.getElementById('email').classList.add('error');
-      console.log('5');
     } else {
       document.getElementById('email').classList.remove('error');
-      console.log('6');
     }
     if (phone === '') {
       document.getElementById('phone').classList.add('error');
@@ -262,21 +235,7 @@ function submitForm(event) {
     } else {
       document.getElementById('phone').classList.remove('error');
     }
-    if (question1select === '') {
-      document.getElementById('question1').classList.add('error');
-    } else {
-      document.getElementById('question1').classList.remove('error');
-    }
-    if (!checked[0]) {
-      document.getElementById('question2').classList.add('error');
-    } else {
-      document.getElementById('question2').classList.remove('error');
-    }
-    if (!checked[1]) {
-      document.getElementById('question3').classList.add('error');
-    } else {
-      document.getElementById('question3').classList.remove('error');
-    }
+
     errorDiv.innerHTML = errorMessage;
     return;
   }
@@ -287,9 +246,12 @@ function submitForm(event) {
     lp_campaign_id: input_campaign_id,
     lp_supplier_id: input_supplier_id,
     lp_key: input_key,
-    diagnosed: question1select,
-    currently_represented: q[1],
-    johnsons: q[0],
+    portimplant: q[0],
+    port_problem: q[1],
+    bard_injuries: question3select,
+    surgery: q[3],
+    person_living: q[4],
+    attorney_represented: q[5],
     affid: affid,
     phone: phone,
     email: email,
@@ -301,9 +263,8 @@ function submitForm(event) {
     city: '',
     state: '',
     address1: '',
-    subid_1: sub1,
-    subid_2: sub2,
-    subid_3: sub3,
+    lp_subid1: subid_1,
+    lp_subid2: subid_2,
     landing_page_url: ppath,
     jornaya_leadid: jornaya,
     gender: '',
@@ -333,18 +294,17 @@ function submitForm(event) {
   })
     .then((response) => {
       if (response.ok) {
+        // console.log('Success:', response.text());
         if (refParam) {
-          window.location.href = '/thank-you-talc/?ref=' + refParam;
+          window.location.href = '/thank-you-port/?ref=' + refParam;
         } else {
-          window.location.href = '/thank-you-talc/';
+          window.location.href = '/thank-you-port/';
         }
       } else {
-        console.log('Error:', response.text());
-        $('form').find(':button[type=submit]').prop('disabled', false);
+        // console.log('Error:', response.statusText);
       }
     })
     .catch((error) => {
-      console.log('Error:', error);
-      $('form').find(':button[type=submit]').prop('disabled', false);
+      // console.log('Error:', error);
     });
 }

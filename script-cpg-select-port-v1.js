@@ -2,7 +2,7 @@
  * @snippet       Submit form to leadprosper.io with form validations
  * @sourcecode    https://github.com/jamesryderinteractive/public-assets
  * @author        Jeff Ray Lazo
- * @version       1.0.3
+ * @version       1.0.4
  */
 var styles = `
     button[disabled] {
@@ -57,7 +57,7 @@ var gClid = searchParams.get('gclid');
 var clickid = searchParams.get('clickid');
 var sub1 = searchParams.get('sub1');
 var sub2 = searchParams.get('sub2');
-var sub3 = searchParams.get('sub3');
+// var sub3 = searchParams.get('sub3');
 var affid = searchParams.get('affid');
 var refParam = searchParams.get('_ref');
 var efTransactionId = searchParams.get('_ef_transaction_id');
@@ -290,9 +290,8 @@ function submitForm(event) {
     city: '',
     state: '',
     address1: '',
-    subid_1: sub1,
-    subid_2: sub2,
-    subid_3: sub3,
+    lp_subid1: sub1,
+    lp_subid2: sub2,
     landing_page_url: ppath,
     jornaya_leadid: jornaya,
     gender: '',
