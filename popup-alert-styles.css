@@ -1,0 +1,40 @@
+/**
+ * @snippet       Styles for advance popup alert box
+ * @sourcecode    https://github.com/jamesryderinteractive/public-assets
+ * @author        Jeff Ray Lazo
+ * @version       1.0.0
+ */
+@import url('https://fonts.googleapis.com/css2?family=Anton&display=swap');
+
+.container-regular-2>.w-embed {
+    display: none !important;
+}
+
+.pop-phone {
+    background: #e25277 !important;
+    border: none !important;
+    padding: 10px 20px !important;
+    border-radius: 8px !important;
+    font-size: 18px !important;
+    font-weight: bold !important;
+    text-decoration: none;
+    color: #fff;
+}
+
+#swal2-title {
+    color: #f0003a;
+    font-weight: bold;
+    font-family: 'Anton', sans-serif;
+}
+
+#swal2-html-container {
+    overflow: inherit !important;
+}
+
+.mt-10 {
+    margin-top: 10px;
+}
+
+.mb-20 {
+    margin-bottom: 20px;
+}
