@@ -2,7 +2,7 @@
  * @snippet       Submit form to leadprosper.io with form validations
  * @sourcecode    https://github.com/jamesryderinteractive/public-assets
  * @author        Jeff Ray Lazo
- * @version       1.0.4
+ * @version       1.0.10
  */
 var styles = `
     button[disabled] {
@@ -190,16 +190,18 @@ function checkAnswers(numQuestions) {
   var arrAnswers = [];
   for (var i = 1; i <= numQuestions; i++) {
     var question = 'question__' + i;
-    var selectedOption = answers[question].value.toLowerCase();
-    arrAnswers.push(selectedOption);
-
-    if (selectedOption === 'yes' || selectedOption === 'no') {
-      document.getElementById('question' + i).classList.remove('error');
+    if (answers[question] && typeof answers[question] !== 'undefined') {
+      var selectedOption = answers[question].value.toLowerCase();
+      arrAnswers.push(selectedOption);
+      if (selectedOption === 'yes' || selectedOption === 'no') {
+        document.getElementById('question' + i).classList.remove('error');
+      } else {
+        document.getElementById('question' + i).classList.add('error');
+      }
     } else {
-      document.getElementById('question' + i).classList.add('error');
+      console.error(`Element named ${question} is not found in the form.`);
     }
   }
-
   return arrAnswers;
 }
 
@@ -219,7 +221,10 @@ function submitForm(event) {
   var input_key = document.getElementById('lp_key').value;
   var jornaya = document.getElementById('jornaya').value;
   var ppath = window.location.href;
-  var arrAnswers = checkAnswers(6);
+  var questionnaireElems = document.querySelectorAll('[id^="question"]');
+  var countQuestionnaire = questionnaireElems.length || 0;
+
+  var arrAnswers = checkAnswers(countQuestionnaire);
   var hasAnswer =
     arrAnswers.indexOf('yes') !== -1 || arrAnswers.indexOf('no') !== -1
       ? true
@@ -327,13 +332,13 @@ function submitForm(event) {
           window.location.href = '/thank-you-port/';
         }
       } else {
-        // console.log('Error:', response.text());
+        console.log('Error:', response.text());
         // FIXME: Need to improve the disable button. If user fills again the form the button will not go back to enable
         // $('form').find(':button[type=submit]').prop('disabled', false);
       }
     })
     .catch((error) => {
-      //   console.log('Error:', error);
+      console.log('Error:', error);
       // FIXME: Need to improve the disable button. If user fills again the form the button will not go back to enable
       // $('form').find(':button[type=submit]').prop('disabled', false);
     });
