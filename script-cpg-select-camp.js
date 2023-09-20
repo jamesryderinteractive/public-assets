@@ -2,7 +2,7 @@
  * @snippet       Submit form to leadprosper.io with form validations
  * @sourcecode    https://github.com/jamesryderinteractive/public-assets
  * @author        Jeff Ray Lazo
- * @version       1.0.2
+ * @version       1.0.4
  */
 jQuery(document).ready(function ($) {
   $('.mask_phone').on('input', function () {
@@ -90,6 +90,34 @@ jQuery(function ($) {
   });
 });
 
+/**
+ * Check if the radio button were checked wether Yes, No or not selected
+ *
+ * @param {number} numQuestions numbers of questionnaires
+ * @returns arrays of answers yes, no or empty string
+ */
+function checkAnswers(numQuestions) {
+  var form = document.getElementById('lead-form');
+  var answers = form.elements;
+  var arrAnswers = [];
+  // NOTE: The questionnaire will always start with the 1st element radio button
+  for (var i = 2; i <= numQuestions; i++) {
+    var question = 'question__' + i;
+    if (answers[question] && typeof answers[question] !== 'undefined') {
+      var selectedOption = answers[question].value.toLowerCase();
+      arrAnswers.push(selectedOption);
+      if (selectedOption === 'yes' || selectedOption === 'no') {
+        document.getElementById('question' + i).classList.remove('error');
+      } else {
+        document.getElementById('question' + i).classList.add('error');
+      }
+    } else {
+      console.error(`Element named ${question} is not found in the form.`);
+    }
+  }
+  return arrAnswers;
+}
+
 function submitForm(event) {
   event.preventDefault();
 
@@ -110,45 +138,30 @@ function submitForm(event) {
     var email = document.getElementById('email').value;
     var phone = document.getElementById('phone').value.replace(/-/g, '');
     var question1select = document.getElementById('select__1').value;
-    var question2 = document.querySelectorAll('input[name="question__2"]');
-    var question3 = document.querySelectorAll('input[name="question__3"]');
-
-    // console.log('phone: ' + phone);
-
-    var checked = [false, false];
-    var q = ['', ''];
-    var questionsArray = [question2, question3];
-
-    for (var j = 0; j < 2; j++) {
-      for (var i = 0; i < questionsArray[j].length; i++) {
-        if (questionsArray[j][i].checked) {
-          checked[j] = questionsArray[j][i].checked;
-          q[j] = questionsArray[j][i].value;
-          break;
-        }
-      }
-    }
-
-    // console.log(q[0] + ' - ' + q[1]);
-    // console.log(ipAddress);
 
     // Hidden
     var input_campaign_id = document.getElementById('lp_campaign_id').value;
     var input_supplier_id = document.getElementById('lp_supplier_id').value;
     var input_key = document.getElementById('lp_key').value;
     var jornaya = document.getElementById('jornaya').value;
-
     var ppath = window.location.href;
+    var questionnaireElems = document.querySelectorAll('[id^="question"]');
+    var countQuestionnaire = questionnaireElems.length || 0;
+
+    var arrAnswers = checkAnswers(countQuestionnaire);
+    var hasAnswer =
+      arrAnswers.indexOf('yes') !== -1 || arrAnswers.indexOf('no') !== -1
+        ? true
+        : false;
 
     if (
-      firstName === '' ||
-      lastName === '' ||
-      email === '' ||
-      phone === '' ||
-      phone.length !== 10 ||
-      question1select === '' ||
-      !checked[0] ||
-      !checked[1]
+      !firstName ||
+      !lastName ||
+      !email ||
+      !phone ||
+      phone.replace(/\D/g, '').length !== 10 ||
+      !question1select ||
+      !hasAnswer
     ) {
       var errorMessage = 'Please fill in all required fields.';
       var errorDiv = document.getElementById('error-message');
@@ -182,16 +195,7 @@ function submitForm(event) {
       } else {
         document.getElementById('question1').classList.remove('error');
       }
-      if (!checked[0]) {
-        document.getElementById('question2').classList.add('error');
-      } else {
-        document.getElementById('question2').classList.remove('error');
-      }
-      if (!checked[1]) {
-        document.getElementById('question3').classList.add('error');
-      } else {
-        document.getElementById('question3').classList.remove('error');
-      }
+      
       errorDiv.innerHTML = errorMessage;
       return;
     }
@@ -219,8 +223,8 @@ function submitForm(event) {
       utm_term: utmTerm,
       utm_content: utmContent,
       gclid: gClid,
-      contaminated: q[0],
-      represented: q[1],
+      contaminated: arrAnswers[0],
+      represented: arrAnswers[1],
       tcpa_consent_date: formattedDate,
       qualification: question1select,
     };
