@@ -1,0 +1,49 @@
+/**
+ * @snippet       Styles for stick phone button
+ * @sourcecode    https://github.com/jamesryderinteractive/public-assets
+ * @author        Jeff Ray Lazo
+ * @version       1.0.1
+ */
+/** Floating Phone Number **/
+.floating-phone {
+    /* display: none; */
+    position: fixed;
+    border-color: #ff0000;
+    background: #ff0000;
+    padding: 14px 24px;
+    border-radius: 10000px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    z-index: 9999;
+    top: 92%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: max-content;
+  }
+  .floating-phone:hover {
+    color: #000000;
+    background-color: #c81010;
+    border-color: #c81010;
+  }
+  .floating-phone a {
+    text-decoration: none;
+    color: rgb(255,255,255);
+    font-weight: bold;
+    font-size: 20px;
+    font-family: "Poppins",sans-serif;
+  }
+  /** Floating Phone Number styles for smartphones */
+  @media only screen and (max-width: 600px) {
+    .floating-phone {
+      /* display: initial; */
+      padding: 12px 18px;
+    }
+    .floating-phone a {
+      font-size: 16px;
+    }
+  }
+  /** Floating Phone Number styles for tablets **/
+  @media only screen and (min-width: 601px) and (max-width: 1024px) {
+    .floating-phone {
+    display: initial;
+    }
+  }
