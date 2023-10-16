@@ -2,20 +2,8 @@
  * @snippet       Submit form to leadprosper.io with form validations
  * @sourcecode    https://github.com/jamesryderinteractive/public-assets
  * @author        Jeff Ray Lazo
- * @version       1.0.1
+ * @version       1.0.0
  */
-var styles = `
-    button[disabled] {
-      background-color: #ccc!important;
-      cursor: unset!important;
-      pointer-events: none!important;
-    }
-`;
-
-var styleSheet = document.createElement('style');
-styleSheet.innerText = styles;
-document.head.appendChild(styleSheet);
-
 jQuery(document).ready(function ($) {
   $('.mask_phone').on('input', function () {
     var result = $(this)
@@ -47,6 +35,7 @@ jQuery(document).ready(function ($) {
 });
 
 var searchParams = new URLSearchParams(window.location.search);
+
 var utmSource = searchParams.get('utm_source');
 var utmMedium = searchParams.get('utm_medium');
 var utmCampaign = searchParams.get('utm_campaign');
@@ -54,13 +43,13 @@ var utmContent = searchParams.get('utm_content');
 var utmTerm = searchParams.get('utm_term');
 var gClid = searchParams.get('gclid');
 var clickid = searchParams.get('clickid');
-var sub1 = searchParams.get('sub1');
-var sub2 = searchParams.get('sub2');
-var sub3 = searchParams.get('sub3');
-var affid = searchParams.get('affid');
+var subid_1 = searchParams.get('subid_1');
+var subid_2 = searchParams.get('subid_2');
+var subid_3 = searchParams.get('subid_3');
 var refParam = searchParams.get('_ref');
 var efTransactionId = searchParams.get('_ef_transaction_id');
 var gtmtag = searchParams.get('gtmtag');
+var affid = searchParams.get('affid');
 
 var aElement = document.getElementById('main_phone');
 var hrefValue = aElement.getAttribute('href');
@@ -94,7 +83,7 @@ if (clickid) {
 var storedGtmTag = sessionStorage.getItem('gtmtag');
 var storedGClid = sessionStorage.getItem('gclid');
 var storeClickid = sessionStorage.getItem('clickid');
-// console.log(gtmtag);
+
 if (storedGtmTag) {
   (function (w, d, s, l, i) {
     w[l] = w[l] || [];
@@ -107,73 +96,6 @@ if (storedGtmTag) {
     f.parentNode.insertBefore(j, f);
   })(window, document, 'script', 'dataLayer', `${storedGtmTag.toUpperCase()}`);
 }
-
-//steps//
-jQuery(function ($) {
-  var $steps = $('.stepbox');
-  function next(e, val) {
-    e.preventDefault();
-
-    var currentStep = $('.stepbox:not(.hidden)');
-    if (val) {
-      var nextStep = currentStep.next('.stepbox');
-    } else {
-      //   nextStep = $('.popin');
-      window.location.href = '/not-qualified-talcum-powder-compensation-nilc/';
-    }
-
-    $('.progress').css({ display: '' });
-    currentStep.fadeOut(function () {
-      currentStep.addClass('hidden');
-
-      if (nextStep.length) {
-        nextStep.fadeIn('slow', function () {
-          nextStep.removeClass('hidden');
-        });
-
-        var progress;
-        if (nextStep.data('progress')) {
-          progress = parseInt(nextStep.data('progress'));
-        } else {
-          progress =
-            (100 / $steps.length) * (nextStep.index() - $steps.first().index());
-        }
-
-        $('.progress > span').text(Math.round(progress) + '% Complete');
-        $('.progress .bar span').css({ width: progress + '%' });
-
-        return;
-      }
-    });
-  }
-
-  //$('.stepbox button').click(next);
-
-  $('#select__1').change(function (e) {
-    e = e || window.event;
-
-    if ($(this).val() !== 'None') {
-      //   console.log('select ' + $(this).val());
-      next(e, true);
-    } else {
-      next(e, false);
-    }
-  });
-
-  $('input[type=radio]').change(function (e) {
-    // Add this line to pass the event object to the function
-    e = e || window.event;
-
-    if (!$(this).hasClass('end')) {
-      //   console.log('select ' + $(this).val());
-      next(e, true);
-    } else {
-      next(e, false);
-    }
-  });
-});
-
-//end steps//
 
 /**
  * Check if the radio button were checked wether Yes, No or not selected
@@ -206,16 +128,13 @@ function checkAnswers(numQuestions) {
 function submitForm(event) {
   event.preventDefault();
 
-  $('form').find(':button[type=submit]').prop('disabled', true);
-  //   console.log('submit');
-
   var firstName = document.getElementById('fname').value;
   var lastName = document.getElementById('lname').value;
   var email = document.getElementById('email').value;
   var phone = document.getElementById('phone').value.replace(/-/g, '');
   var question1select = document.getElementById('select__1').value;
-  // var question2 = document.querySelectorAll('input[name="question__2"]');
-  // var question3 = document.querySelectorAll('input[name="question__3"]');
+  //   var question2 = document.querySelectorAll('input[name="question__2"]');
+  //   var question3 = document.querySelectorAll('input[name="question__3"]');
 
   // Hidden
   var input_campaign_id = document.getElementById('lp_campaign_id').value;
@@ -225,6 +144,7 @@ function submitForm(event) {
   var ppath = window.location.href;
   var questionnaireElems = document.querySelectorAll('[id^="question"]');
   var countQuestionnaire = questionnaireElems.length || 0;
+
   var arrAnswers = checkAnswers(countQuestionnaire);
   var hasAnswer =
     arrAnswers.indexOf('yes') !== -1 || arrAnswers.indexOf('no') !== -1
@@ -283,41 +203,27 @@ function submitForm(event) {
     lp_campaign_id: input_campaign_id,
     lp_supplier_id: input_supplier_id,
     lp_key: input_key,
-    diagnosed: question1select,
-    currently_represented: arrAnswers[0],
-    johnsons: arrAnswers[1],
-    affid: affid,
-    phone: phone,
-    email: email,
-    postal_code: '',
-    ip_address: ipAddress,
-    tcpa_consent_date: formattedDate,
+    lp_subid1: subid_1,
+    lp_subid2: subid_2,
     first_name: firstName,
     last_name: lastName,
-    city: '',
-    state: '',
-    address1: '',
-    subid_1: sub1,
-    subid_2: sub2,
-    subid_3: sub3,
+    email: email,
+    phone_number: phone,
+    ip_address: ipAddress,
     landing_page_url: ppath,
     jornaya_leadid: jornaya,
-    gender: '',
-    cost: '',
-    UTM: '',
-    source: utmSource ? utmSource : 'none',
-    utm_source: utmSource ? utmSource : 'none',
-    utm_campaign: utmCampaign,
+    gtmtag: gtmtag,
+    utm_source: utmSource,
     utm_medium: utmMedium,
-    utm_content: utmContent,
+    utm_campaign: utmCampaign,
     utm_term: utmTerm,
+    utm_content: utmContent,
     gclid: gClid,
-    leadid_token: jornaya ? jornaya : 'none',
-    LEADID: phoneNumber,
-    lead_source_id: '',
-    zip_code: '',
-    comments: '',
-    _ef_transaction_id: efTransactionId,
+    contaminated: arrAnswers[0],
+    represented: arrAnswers[1],
+    affid: affid,
+    qualification: question1select,
+    ef_transaction_id: efTransactionId,
   };
 
   fetch(apiUrl, {
@@ -329,18 +235,17 @@ function submitForm(event) {
   })
     .then((response) => {
       if (response.ok) {
+        console.log('Success:', response.message);
         if (refParam) {
-          window.location.href = '/thank-you-talc/?ref=' + refParam;
+          window.location.href = '/thank-you-camp/?ref=' + refParam;
         } else {
-          window.location.href = '/thank-you-talc/';
+          window.location.href = '/thank-you-camp/';
         }
       } else {
-        console.log('Error:', response.text());
-        // $('form').find(':button[type=submit]').prop('disabled', false);
+        console.log('Error:', response.statusText);
       }
     })
     .catch((error) => {
       console.log('Error:', error);
-      // $('form').find(':button[type=submit]').prop('disabled', false);
     });
 }
